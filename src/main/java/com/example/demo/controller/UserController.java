@@ -98,5 +98,15 @@ public class UserController {
 	        return 0;
 	    }
 	}
+	
+	@GetMapping("/findrestauu/{id}")
+	public Restaurant  findrestau2(@PathVariable int id) {
+	    User user = userRepository.findById(id);
+	    if (user != null && user.getRestaurant() != null) {
+	        return user.getRestaurant();
+	    } else {
+	        return null;
+	    }
+	}
 
 }
