@@ -72,6 +72,16 @@ public class UserController {
 	public User createUser(@RequestBody User user) {
 		return userRepository.save(user);
 	}
+	
+	@GetMapping("/findrestauu/{id}")
+	public Restaurant  findrestau2(@PathVariable int id) {
+	    User user = userRepository.findById(id);
+	    if (user != null && user.getRestaurant() != null) {
+	        return user.getRestaurant();
+	    } else {
+	        return null;
+	    }
+	}
 
 }
 
