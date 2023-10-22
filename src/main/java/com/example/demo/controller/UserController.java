@@ -7,9 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.demo.entity.Restaurant;
 import com.example.demo.entity.User;
-import com.example.demo.repository.RestaurantRepository;
 import com.example.demo.repository.UserRepository;
 
 @RestController
@@ -18,9 +16,6 @@ public class UserController {
 
 	@Autowired
 	private UserRepository userRepository;
-
-	@Autowired
-	private RestaurantRepository restaurantRepository;
 
 	@GetMapping("/all")
 	public List<User> getAllUsers() {
@@ -37,10 +32,6 @@ public class UserController {
 		}
 	}
 
-	@PostMapping("/save")
-	public User createUser(@RequestBody User user) {
-		return userRepository.save(user);
-	}
 
 	@PutMapping("/{id}")
 	public ResponseEntity<User> updateUser(@PathVariable int id, @RequestBody User newUser) {
@@ -66,37 +57,21 @@ public class UserController {
 		}
 	}
 
-	@GetMapping("/{email}/{password}")
-	public User getUserByEmailAndPassword(@PathVariable String email, @PathVariable String password) {
+	
+	@GetMapping("/login/{email}/{password}")
+	public int getUserByEmailAndPassword(@PathVariable String email, @PathVariable String password) {
 		User user = userRepository.findByEmail(email);
 		if (user != null && user.getPassword().equals(password)) {
-			return user;
+			return user.getId();
 		} else {
-			return null;
+			return 0;
 		}
 	}
-
-	@PutMapping("/addrestau/{id}/{rid}")
-	public ResponseEntity<User> addrestau(@PathVariable int id, @PathVariable int rid) {
-		User user = userRepository.findById(id);
-		Restaurant restaurant = restaurantRepository.findById(rid);
-		user.setRestaurant(restaurant);
-		userRepository.save(user);
-		return new ResponseEntity<>(user, HttpStatus.OK);
-
-	}
 	
-	
-	
-
-	@GetMapping("/findrestau/{id}")
-	public int  findrestau(@PathVariable int id) {
-	    User user = userRepository.findById(id);
-	    if (user != null && user.getRestaurant() != null) {
-	        return 1;
-	    } else {
-	        return 0;
-	    }
+	@PostMapping("/signup")
+	public User createUser(@RequestBody User user) {
+		return userRepository.save(user);
 	}
 
 }
+

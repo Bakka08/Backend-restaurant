@@ -1,4 +1,4 @@
-package com.exemple.demo.service;
+package com.example.demo.service;
 
 import java.util.List;
 
@@ -6,7 +6,7 @@ import com.example.demo.entity.User;
 import com.example.demo.idao.IDao;
 import com.example.demo.repository.UserRepository;
 
-public class Userservice implements IDao<User> {
+public class UserService implements IDao<User> {
 	UserRepository userRepository;
 
 	@Override
@@ -15,7 +15,7 @@ public class Userservice implements IDao<User> {
 
 	}
 
-	@Override
+	@Override 
 	public void delete(User o) {
 		userRepository.delete(o);
 
